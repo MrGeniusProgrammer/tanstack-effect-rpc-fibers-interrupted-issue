@@ -6,28 +6,48 @@ import * as Effect from 'effect/Effect'
 import { useAtomValue } from '@effect-atom/atom-react'
 import * as RpcClient from '@effect/rpc/RpcClient'
 import { Rpcs } from '@/domains/rpcs'
+import * as FetchHttpClient from '@effect/platform/FetchHttpClient'
+import * as HttpClient from '@effect/platform/HttpClient'
+import * as Layer from 'effect/Layer'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
-const runtimeAtom = Atom.runtime(ProtocolLive)
+const runtimeAtom = Atom.runtime(
+  Layer.mergeAll(ProtocolLive, FetchHttpClient.layer),
+)
 
 const healthStatusAtom = runtimeAtom
   .atom(
     Effect.gen(function* () {
       const client = yield* RpcClient.make(Rpcs)
-
+      // should give "Ok"
       return yield* client.Heaalth()
     }),
   )
   .pipe(Atom.keepAlive)
 
+const helloAtom = runtimeAtom
+  .atom(
+    Effect.gen(function* () {
+      const client = yield* HttpClient.HttpClient
+      const response = yield* client.get('http://localhost:3000/api/hello')
+      // should give "hello, world"
+      return yield* response.text
+    }),
+  )
+  .pipe(Atom.keepAlive)
+
 function App() {
+  // using rpc
   const healthStatus = useAtomValue(healthStatusAtom)
   // const healthStatus = useAtomValue(AtomRpcClient.query('Heaalth', void 0))
+  console.log('health: ', healthStatus)
 
-  console.log(healthStatus)
+  // using http
+  const hello = useAtomValue(helloAtom)
+  console.log('hello: ', hello)
 
   return (
     <div className="text-center">

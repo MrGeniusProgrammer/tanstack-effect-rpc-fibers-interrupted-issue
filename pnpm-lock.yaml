@@ -53,12 +53,6 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
-      tailwindcss:
-        specifier: ^4.0.6
-        version: 4.1.13
-      vite-tsconfig-paths:
-        specifier: ^5.1.4
-        version: 5.1.4(typescript@5.9.2)(vite@6.3.6(@types/node@22.18.6)(jiti@2.6.0)(lightningcss@1.30.1)(tsx@4.20.6))
     devDependencies:
       '@effect/language-service':
         specifier: ^0.41.0
@@ -90,12 +84,18 @@ importers:
       prettier:
         specifier: ^3.5.3
         version: 3.6.2
+      tailwindcss:
+        specifier: ^4.0.6
+        version: 4.1.13
       typescript:
         specifier: ^5.7.2
         version: 5.9.2
       vite:
         specifier: ^6.3.5
         version: 6.3.6(@types/node@22.18.6)(jiti@2.6.0)(lightningcss@1.30.1)(tsx@4.20.6)
+      vite-tsconfig-paths:
+        specifier: ^5.1.4
+        version: 5.1.4(typescript@5.9.2)(vite@6.3.6(@types/node@22.18.6)(jiti@2.6.0)(lightningcss@1.30.1)(tsx@4.20.6))
       vitest:
         specifier: ^3.0.5
         version: 3.2.4(@types/node@22.18.6)(jiti@2.6.0)(jsdom@26.1.0)(lightningcss@1.30.1)(tsx@4.20.6)

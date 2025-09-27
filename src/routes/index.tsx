@@ -1,11 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router'
 import logo from '../logo.svg'
+import * as Atom from '@effect-atom/atom/Atom'
+import { AtomRpcClient, ProtocolLive } from '@/domains/rpcs-client'
+import * as Effect from 'effect/Effect'
+import { useAtomValue } from '@effect-atom/atom-react'
+import * as RpcClient from '@effect/rpc/RpcClient'
+import { Rpcs } from '@/domains/rpcs'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
+const runtimeAtom = Atom.runtime(ProtocolLive)
+
+const healthStatusAtom = runtimeAtom
+  .atom(
+    Effect.gen(function* () {
+      const client = yield* RpcClient.make(Rpcs)
+
+      return yield* client.Heaalth()
+    }),
+  )
+  .pipe(Atom.keepAlive)
+
 function App() {
+  const healthStatus = useAtomValue(healthStatusAtom)
+  // const healthStatus = useAtomValue(AtomRpcClient.query('Heaalth', void 0))
+
+  console.log(healthStatus)
+
   return (
     <div className="text-center">
       <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">

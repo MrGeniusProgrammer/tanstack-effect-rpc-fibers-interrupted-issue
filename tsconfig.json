@@ -24,6 +24,18 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-    }
+    },
+
+		"plugins": [
+			{
+				"name": "@effect/language-service",
+				"namespaceImportPackages": [
+					"effect",
+					"@effect/*",
+					"@effect-atom/*"
+				],
+				"transform": "@effect/language-service/transform"
+			}
+		]
   }
 }

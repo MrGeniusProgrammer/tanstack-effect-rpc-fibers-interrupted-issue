@@ -6,6 +6,7 @@ import * as Layer from 'effect/Layer'
 import { AppRpcs, Rpcs } from './rpcs'
 import * as HttpLayerRouter from '@effect/platform/HttpLayerRouter'
 import * as HttpServerResponse from '@effect/platform/HttpServerResponse'
+import { RuntimeServerLayers } from './runtime-server'
 
 const AppRpcsLive = AppRpcs.toLayer({
   Heaalth: () => Effect.succeed('Ok'),
@@ -17,13 +18,16 @@ const HelloRoute = HttpLayerRouter.add(
   HttpServerResponse.text('hello, world!'),
 )
 
-const RpcRoute = RpcServer.layerHttpRouter({
-  group: Rpcs,
-  path: '/api/rpc',
-  protocol: 'http',
-}).pipe(
+const RpcRoute = RpcServer.layer(Rpcs).pipe(
+  Layer.provide(
+    RpcServer.layerProtocolHttpRouter({
+      path: '/api/rpc',
+    }),
+  ),
   Layer.provideMerge(AppRpcsLive),
   Layer.provide(RpcSerialization.layerNdjson),
 )
 
-export const AllRoutes = Layer.mergeAll(RpcRoute, HelloRoute)
+export const AllRoutes = Layer.mergeAll(RpcRoute, HelloRoute).pipe(
+  Layer.provide(RuntimeServerLayers),
+)

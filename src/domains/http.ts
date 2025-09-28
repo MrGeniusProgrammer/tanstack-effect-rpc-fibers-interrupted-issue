@@ -9,7 +9,7 @@ import * as HttpServerResponse from '@effect/platform/HttpServerResponse'
 import { RuntimeServerLayers } from './runtime-server'
 
 const AppRpcsLive = AppRpcs.toLayer({
-  Heaalth: () => Effect.succeed('Ok'),
+  Health: () => Effect.succeed('Ok'),
 })
 
 const HelloRoute = HttpLayerRouter.add(
@@ -29,5 +29,10 @@ const RpcRoute = RpcServer.layer(Rpcs).pipe(
 )
 
 export const AllRoutes = Layer.mergeAll(RpcRoute, HelloRoute).pipe(
+  Layer.provide(
+    HttpLayerRouter.cors({
+      credentials: true,
+    }),
+  ),
   Layer.provide(RuntimeServerLayers),
 )

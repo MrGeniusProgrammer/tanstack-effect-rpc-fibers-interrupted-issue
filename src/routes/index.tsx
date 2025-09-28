@@ -4,6 +4,7 @@ import { FiberIssue } from '@/components/fiber-issue'
 
 export const Route = createFileRoute('/')({
   component: App,
+  ssr: false,
 })
 
 function App() {

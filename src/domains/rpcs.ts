@@ -3,7 +3,7 @@ import * as Rpc from '@effect/rpc/Rpc'
 import * as Schema from 'effect/Schema'
 
 export class AppRpcs extends RpcGroup.make(
-  Rpc.make('Heaalth', {
+  Rpc.make('Health', {
     success: Schema.String,
   }),
 ) {}

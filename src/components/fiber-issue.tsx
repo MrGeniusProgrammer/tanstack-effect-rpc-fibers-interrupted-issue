@@ -17,7 +17,7 @@ const getHealthStatusAtom = runtimeAtom.fn(
   Effect.fn('getHealthStatusAtom')(function* (prefix: string) {
     const client = yield* RpcClient.make(Rpcs)
     // should give "Ok"
-    const result = yield* client.Heaalth()
+    const result = yield* client.Health()
 
     yield* Effect.logInfo(prefix, result)
 
@@ -41,7 +41,7 @@ export function FiberIssue({ prefix }: { prefix: string }) {
   // using rpc
   // const getHealthStatus = useAtomSet(getHealthStatusAtom, { mode: 'promise' })
   // const healthStatus = useAtomValue(getHealthStatusAtom)
-  const healthStatus = useAtomValue(AtomRpcClient.query('Heaalth', void 0))
+  const healthStatus = useAtomValue(AtomRpcClient.query('Health', void 0))
 
   // using http
   const getHello = useAtomSet(getHelloAtom, { mode: 'promise' })

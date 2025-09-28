@@ -11,10 +11,10 @@ import { Rpcs } from './rpcs'
 export const ProtocolLive = RpcClient.layerProtocolHttp({
   url: `http://localhost:3000/api/rpc/`,
 }).pipe(
+  Layer.provide(RpcSerialization.layerNdjson),
   Layer.provide([
     // BrowserHttpClient.layerXMLHttpRequest,
     FetchHttpClient.layer,
-    RpcSerialization.layerNdjson,
   ]),
 )
 

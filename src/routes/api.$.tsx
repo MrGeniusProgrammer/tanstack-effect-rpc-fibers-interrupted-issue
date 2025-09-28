@@ -19,6 +19,8 @@ export const Route = createFileRoute('/api/$')({
       GET: handler(),
       POST: handler(),
       OPTIONS: handler(),
+      ALL: handler(),
+      HEAD: handler(),
       DELETE: handler(),
       PUT: handler(),
       PATCH: handler(),

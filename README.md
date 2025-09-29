@@ -1,4 +1,4 @@
-After chaning the port in file `src/domains/rpc-client.ts`, run `pnpm run:server` and `pnpm run dev` to test out pure server method. To check with the tanstack server handlers, just run `pnpm run dev` without any changes to the codebase.
+After chaning the port to `5173` in file `src/domains/rpc-client.ts`, run `pnpm run:server` and `pnpm run dev` to test out pure server method. To check with the tanstack server handlers, just run `pnpm run dev` without any changes to the codebase.
 
 Welcome to your new TanStack app!
 

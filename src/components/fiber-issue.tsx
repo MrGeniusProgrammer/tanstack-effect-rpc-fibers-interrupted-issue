@@ -14,30 +14,30 @@ const runtimeAtom = Atom.runtime(
 )
 
 const getHealthStatusAtom = runtimeAtom.fn(
-  Effect.fn('getHealthStatusAtom')(function* (prefix: string) {
+  Effect.fn('getHealthStatusAtom')(function* () {
     const client = yield* RpcClient.make(Rpcs)
     // should give "Ok"
     const result = yield* client.Health()
 
-    yield* Effect.logInfo(prefix, result)
+    yield* Effect.logInfo(result)
 
     return result
   }),
 )
 
 const getHelloAtom = runtimeAtom.fn(
-  Effect.fn('getHelloAtom')(function* (prefix: string) {
+  Effect.fn('getHelloAtom')(function* () {
     const client = yield* HttpClient.HttpClient
     const response = yield* client.get('http://localhost:3000/api/hello')
     // should give "hello, world"
     const result = yield* response.text
 
-    yield* Effect.log(prefix, result)
+    yield* Effect.log(result)
     return result
   }),
 )
 
-export function FiberIssue({ prefix }: { prefix: string }) {
+export function FiberIssue() {
   // using rpc
   // const getHealthStatus = useAtomSet(getHealthStatusAtom, { mode: 'promise' })
   // const healthStatus = useAtomValue(getHealthStatusAtom)
@@ -53,7 +53,7 @@ export function FiberIssue({ prefix }: { prefix: string }) {
   // }, [getHello, getHealthStatus])
 
   React.useEffect(() => {
-    getHello(prefix)
+    getHello()
   }, [getHello])
 
   return <div>check issue</div>

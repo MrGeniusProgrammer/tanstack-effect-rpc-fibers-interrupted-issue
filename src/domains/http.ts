@@ -13,7 +13,7 @@ const AppRpcsLive = AppRpcs.toLayer({
 })
 
 const HelloRoute = HttpLayerRouter.add(
-  'GET',
+  '*',
   '/api/hello',
   HttpServerResponse.text('hello, world!'),
 )
